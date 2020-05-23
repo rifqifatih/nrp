@@ -13,6 +13,7 @@ RUN cd $HOME/nrp/src && source $HOME/.opt/platform_venv/bin/activate && pyxbgen 
 RUN gen_file_path=$HBP/ExDBackend/hbp_nrp_commons/hbp_nrp_commons/generated && filepaths=$HOME/nrp/src && sudo cp $filepaths/bibi_api_gen.py $gen_file_path &&  sudo cp $filepaths/exp_conf_api_gen.py $gen_file_path && sudo cp $filepaths/_sc.py $gen_file_path && sudo cp $filepaths/robot_conf_api_gen.py $gen_file_path && sudo cp $filepaths/environment_conf_api_gen.py $gen_file_path
 
 USER root
+
 CMD ["/usr/bin/supervisord", "-n"]
 
 EXPOSE 8080
