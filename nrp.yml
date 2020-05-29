@@ -33,3 +33,13 @@ spec:
           imagePullPolicy: Always
           ports:
           - containerPort: 8080
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - nrp-frontend
+            topologyKey: "kubernetes.io/hostname"
