@@ -33,6 +33,11 @@ spec:
           imagePullPolicy: Always
           ports:
           - containerPort: 8080
+          volumeMounts:
+          - name: nrp-models
+            mountPath: /home/bbpnrsoa/nrp/src/Models
+          - name: nrp-experiments
+            mountPath: /home/bbpnrsoa/nrp/src/Experiments
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -43,13 +48,36 @@ spec:
                 values:
                 - nrp-frontend
             topologyKey: "kubernetes.io/hostname"
+      initContainers:
+      - name: init-nrp-models
+        image: k8s.gcr.io/git-sync:v3.1.3
+        volumeMounts:
+        - mountPath: /tmp
+          name: nrp-models
+        env:
+        - name: GIT_SYNC_REPO
+          value: https://bitbucket.org/hbpneurorobotics/Models.git
+        - name: GIT_SYNC_BRANCH
+          value: master18
+        - name: GIT_SYNC_ROOT
+          value: /tmp
+      - name: init-nrp-experiments
+        image: k8s.gcr.io/git-sync:v3.1.3
+        volumeMounts:
+        - mountPath: /tmp
+          name: nrp-experiments
+        env:
+        - name: GIT_SYNC_REPO
+          value: https://bitbucket.org/hbpneurorobotics/Experiments.git
+        - name: GIT_SYNC_BRANCH
+          value: master18
+        - name: GIT_SYNC_ROOT
+          value: /tmp
       volumes:
+      - name: nrp-models
+        emptyDir: {}
+      - name: nrp-experiments
+        emptyDir: {}
       - name: nrp-user-data
         hostPath:
           path: /home/bbpnrsoa/.opt/nrpStorage
-      - name: nrp-models
-        hostPath:
-          path: /home/bbpnrsoa/nrp/src/Models
-      - name: nrp-experiments
-        hostPath:
-          path: /home/bbpnrsoa/nrp/src/Experiments
