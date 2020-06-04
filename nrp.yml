@@ -43,3 +43,13 @@ spec:
                 values:
                 - nrp-frontend
             topologyKey: "kubernetes.io/hostname"
+      volumes:
+      - name: nrp_user_data
+        hostPath:
+          path: /home/bbpnrsoa/.opt/nrpStorage
+      - name: nrp_models
+        hostPath:
+          path: /home/bbpnrsoa/nrp/src/Models
+      - name: nrp_experiments
+        hostPath:
+          path: /home/bbpnrsoa/nrp/src/Experiments
