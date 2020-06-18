@@ -9,23 +9,28 @@ spec:
   ports:
   - port: 8080
     targetPort: 8080
-    nodePort: 30001
   selector:
     app: nrp
 ---
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: nrp
+  annotations:
+    service-per-pod-label: nrp
+    service-per-pod-ports: 8080:8080
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: nrp
+  serviceName: nrp
   template:
     metadata:
       labels:
         app: nrp
+      annotations:
+        pod-name-label: nrp
     spec:
       containers:
         - name: nrp
