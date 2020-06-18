@@ -17,7 +17,7 @@ kind: StatefulSet
 metadata:
   name: nrp
   annotations:
-    service-per-pod-label: nrp
+    service-per-pod-label: statefulset.kubernetes.io/pod-name
     service-per-pod-ports: 8080:8080
 spec:
   replicas: 1
@@ -30,7 +30,7 @@ spec:
       labels:
         app: nrp
       annotations:
-        pod-name-label: nrp
+        pod-name-label: pod-name
     spec:
       containers:
         - name: nrp
