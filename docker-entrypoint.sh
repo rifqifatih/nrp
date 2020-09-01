@@ -6,6 +6,9 @@ export NODE_IP=$(curl -H "Metadata-Flavor: Google" http://169.254.169.254/comput
 echo "127.0.0.1 $(uname -n)" | sudo tee --append /etc/hosts
 # sudo git clone --progress --branch=master18 https://bitbucket.org/hbpneurorobotics/Models.git Models/
 # sudo git clone --progress --branch=master18 https://bitbucket.org/hbpneurorobotics/Experiments.git Experiments/
+sudo git clone https://github.com/rifqifatih/distributed_rl.git
+sudo chown -R bbpnrsoa:bbp-ext distributed_rl
+mv distributed_rl/rl_worker /home/bbpnrsoa/nrp/src/
 sudo chown -R bbpnrsoa:bbp-ext /home/bbpnrsoa/nrp/src/Experiments && sudo chown -R bbpnrsoa:bbp-ext /home/bbpnrsoa/nrp/src/Models
 /home/bbpnrsoa/nrp/src/user-scripts/rendering_mode cpu
 pip install pillow && python /home/bbpnrsoa/nrp/src/user-scripts/generatelowrespbr.py
